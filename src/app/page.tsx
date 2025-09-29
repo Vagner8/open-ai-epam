@@ -2,11 +2,15 @@ import styles from "./page.module.css";
 import OpenAI from "openai";
 
 export default async function Home() {
+  const developerMessage = "You are a health coach and fitness trainer.";
+  const userMessage =
+    "Provide me advice on what exercises should I do for my back pain?";
+
   const client = new OpenAI();
   const response = await client.responses.create({
     model: "gpt-4",
-    input:
-      "Suggest some beginner exercises for someone with mild back pain that can be done at home without equipment.",
+    input: userMessage,
+    instructions: developerMessage,
   });
 
   return (
