@@ -1,23 +1,23 @@
 import styles from "./page.module.css";
-import OpenAI from "openai";
+import { getChatCompletion } from "./utils/getChatCompletion";
 
 export default async function Home() {
-  const developerMessage = "You are a health coach and fitness trainer.";
-  const userMessage =
-    "Provide me advice on what exercises should I do for my back pain?";
+  const prompt = "Give me 3 fun facts about space.";
+  const parameters = {
+    temperature: 0.9,
+    top_p: 0.95,
+    max_tokens: 100,
+    n: 3,
+    frequency_penalty: 0.2,
+  };
 
-  const client = new OpenAI();
-  const response = await client.responses.create({
-    model: "gpt-4",
-    input: userMessage,
-    instructions: developerMessage,
-  });
+  const responses = await getChatCompletion(prompt, parameters);
 
   return (
     <div className={styles.page}>
       <h1>Home</h1>
       <h1>Response</h1>
-      <p>{response.output_text}</p>
+      <p>{responses}</p>
     </div>
   );
 }
